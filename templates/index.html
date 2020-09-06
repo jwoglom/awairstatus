@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+    <title>Awair Status</title>
+    <script type="text/javascript" src="static/superagent.js"></script>
+    <script type="text/javascript">
+function loadData() {
+    superagent.get("api/events_score", function(d) {
+        var json = JSON.parse(d.text);
+        console.log(json);
+        displayData(json[0]);
+    })
+}
+
+function displayData(json) {
+    document.querySelector("#awair-score").innerText = json["score"];
+    function toF(c) {
+        return parseInt(32 + (c * 9) / 5);
+    }
+    document.querySelector("#awair-temp").innerText = toF(json["sensor"]["temp"]);
+    document.querySelector("#awair-humid").innerText = parseInt(json["sensor"]["humid"]);
+    document.querySelector("#awair-co2").innerText = parseInt(json["sensor"]["co2"]);
+    function color(n, max, min) {
+        if (n <= max[0] && n >= min[0]) {
+            return 'green';
+        } else if ((n >= max[0] && n <= max[1]) || (min.length > 1 && n >= min[1] && n <= min[0])) {
+            return 'yellow';
+        } else if ((n >= max[1] && n <= max[2]) || (min.length > 2 && n >= min[2] && n <= min[1])) {
+            return 'orange';
+        } else {
+            return 'red';
+        }
+    }
+    document.querySelector("#awair-score").classList = color(json["score"], [100], [80, 60]);
+    document.querySelector("#awair-temp").classList = color(toF(json["sensor"]["temp"]), [77, 79, 89], [64, 55, 51]);
+    document.querySelector("#awair-humid").classList = color(json["sensor"]["humid"], [50, 60, 70], [40, 35, 20]);
+    document.querySelector("#awair-co2").classList = color(json["sensor"]["co2"], [600, 1000, 1500], [0]);
+
+    latesttimestamp = json["timestamp"];
+    updateTimestamp();
+}
+
+var latesttimestamp = 0;
+function updateTimestamp() {
+    var sec = (new Date() - new Date(latesttimestamp)) / 1000;
+    var min = parseInt(sec / 60);
+    var hrs = parseInt(sec / 3600);
+    var ago;
+    if (latesttimestamp == 0) ago = "loading...";
+    else if (hrs > 0) ago = hrs + " hr ago";
+    else if (min > 0) ago = min + " min ago";
+    else ago = "now";
+
+    document.querySelector("#updated").innerText = ago;
+    console.debug("awair timestamp:", ago, "seconds:", sec)
+}
+
+window.onload = function() {
+    loadData();
+    var dark = location.search.split("dark=")[1];
+    if (dark) {
+        dark = dark.split("&")[0];
+        document.querySelector("body").classList.add('dark');
+        if (dark.length > 1) {
+            document.querySelector("body").style.background = dark;
+        }
+    }
+    var zoom = location.search.split("zoom=")[1];
+    if (zoom) {
+        zoom = zoom.split("&")[0];
+        document.querySelector("body").style.zoom = zoom;
+    }
+
+    setInterval(function() { loadData() }, 5 * 60 * 1000);
+    setInterval(updateTimestamp, 30 * 1000);
+}
+    </script>
+    <meta http-equiv="refresh" content="3600" />
+    <style>
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+body.dark {
+    background: #343a40;
+    color: white;
+}
+body.dark #awair-score:after, 
+body.dark #awair-temp:after, 
+body.dark #awair-humid:after {
+    color: white;
+}
+
+tr th, tr td {
+    padding: 5px 10px;
+    text-align: left;
+}
+th:after {
+    content: ":";
+}
+#awair-score:after {
+    content: " / 100";
+    color: black;
+}
+#awair-temp:after {
+    content: "\00B0 F";
+    color: black;
+}
+#awair-humid:after {
+    content: "%";
+    color: black;
+}
+.green {
+    color: green;
+}
+.yellow {
+    color: yellowgreen;
+}
+.orange {
+    color: orange;
+    font-weight: bold;
+}
+.red {
+    color: red;
+    font-weight: bold;
+    background: pink;
+}
+    </style>
+
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Awair Score</th>
+            <td id="awair-score"></td>
+        </tr>
+
+        <tr>
+            <th>Temperature</th>
+            <td id="awair-temp"></td>
+        </tr>
+
+        <tr>
+            <th>Humidity</th>
+            <td id="awair-humid"></td>
+        </tr>
+
+        <tr>
+            <th>CO2</th>
+            <td id="awair-co2"></td>
+        </tr>
+        <tr>
+            <td colspan=2>
+                Updated <span id="updated"></span>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
