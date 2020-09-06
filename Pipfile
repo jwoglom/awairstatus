@@ -10,5 +10,3 @@ pyawair = {git = "https://github.com/jwoglom/pyawair"}
 flask = "*"
 arrow = "*"
 
-[requires]
-python_version = "3.7"

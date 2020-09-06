@@ -93,7 +93,7 @@
         },
         "pyawair": {
             "git": "https://github.com/jwoglom/pyawair",
-            "ref": "1abf372891aa3fb6d8589eb87d20ef0f219abd6c"
+            "ref": "f634870ed04258babda8d2bc5e32a678b796dd93"
         },
         "python-dateutil": {
             "hashes": [
