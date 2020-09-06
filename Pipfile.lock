@@ -1,12 +1,10 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b57feb102abcc455b47d5f9361b6660a59d602861f3f49c11d244c805eb54f46"
+            "sha256": "efa0cc2a14f0347f85d5291a673a9dbd26c6eb3269aa5fdacf66aeb369eedc8f"
         },
         "pipfile-spec": 6,
-        "requires": {
-            "python_version": "3.7"
-        },
+        "requires": {},
         "sources": [
             {
                 "name": "pypi",
@@ -93,7 +91,7 @@
         },
         "pyawair": {
             "git": "https://github.com/jwoglom/pyawair",
-            "ref": "f634870ed04258babda8d2bc5e32a678b796dd93"
+            "ref": "d3bda269c9d3a5631d846538dffdcc1ae4dc0b0a"
         },
         "python-dateutil": {
             "hashes": [
