@@ -6,7 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-pyawair = {git = "https://github.com/jwoglom/pyawair"}
+pyawair-jwoglom = {git = "https://github.com/jwoglom/pyawair"}
 flask = "*"
 arrow = "*"
 
+[scripts]
+dev = "flask run -p 5001"
