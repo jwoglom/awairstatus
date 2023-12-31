@@ -33,7 +33,7 @@ app.logger.info('Device: %s' % device)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', mini=request.args.get('mini', False))
 
 @app.route('/api/events_score')
 def events_score():

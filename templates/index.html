@@ -130,6 +130,32 @@ th:after {
 
 </head>
 <body>
+    {% if mini %}
+    <table>
+        <tr>
+            <th>Awair</th>
+            <td id="awair-score"></td>
+            <td>&nbsp;</th>
+            <th>CO2</th>
+            <td id="awair-co2"></td>
+        </tr>
+
+        <tr>
+            <th>Temperature</th>
+            <td id="awair-temp"></td>
+            <td>&nbsp;</th>
+            <th>Humidity</th>
+            <td id="awair-humid"></td>
+        </tr>
+
+        <tr>
+            <td colspan=5>
+                Updated <span id="updated"></span>
+            </td>
+        </tr>
+    </table>
+
+    {% else %}
     <table>
         <tr>
             <th>Awair Score</th>
@@ -157,5 +183,6 @@ th:after {
             </td>
         </tr>
     </table>
+    {% endif %}
 </body>
 </html>
