@@ -93,7 +93,7 @@ body.dark #awair-humid:after {
 }
 
 tr th, tr td {
-    padding: 5px 10px;
+    padding: 5px 5px;
     text-align: left;
 }
 th:after {
@@ -133,13 +133,17 @@ th:after {
     {% if mini %}
     <table>
         <tr>
+            <td>Score:</td>
             <td id="awair-score"></td>
-            <td>CO2: <span id="awair-co2"></span></td>
+            <td>CO2:</td>
+            <td id="awair-co2"></td>
         </tr>
 
         <tr>
+            <td>Temp:</td>
             <td id="awair-temp"></td>
-            <td>Humid: <span id="awair-humid"></span></td>
+            <td>Humid:</td>
+            <td id="awair-humid"></td>
         </tr>
 
         <tr>
