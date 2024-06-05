@@ -37,8 +37,10 @@ def index():
 
 @app.route('/api/events_score')
 def events_score():
-    data = api.events_score(device, limit=request.args.get('limit', 1))
-    return jsonify(data)
+    data = api.timeline(device)
+    if data:
+        return jsonify([data[-1]])
+    return jsonify([{}])
 
 @app.route('/api/inbox_items')
 def inbox_items():
